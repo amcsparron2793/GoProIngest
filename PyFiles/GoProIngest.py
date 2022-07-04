@@ -156,7 +156,7 @@ def yesnoquit(question):
 
 
 def StartIngest():
-    # TODO: Add Logging
+    # TODO: Add Logging - handle in separate thread?
     # TODO: add "file already copied" checker - hash?
     # TODO: add in shutil error handling
     global folder_names, CamSD_ContentBasePath, CamSD_DriveLetter
