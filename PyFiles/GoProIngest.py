@@ -129,6 +129,7 @@ def SortContent(base_save_location):
     _SaveLocationCheck(media_save_location, support_save_location)
 
     for f in media_files:
+        # shutil.Error
         shutil.copy2(f, media_save_location)
         print(f"{f} copied")
 
@@ -156,6 +157,8 @@ def yesnoquit(question):
 
 def StartIngest():
     # TODO: Add Logging
+    # TODO: add "file already copied" checker - hash?
+    # TODO: add in shutil error handling
     global folder_names, CamSD_ContentBasePath, CamSD_DriveLetter
 
     folder_names = {
