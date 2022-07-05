@@ -56,7 +56,7 @@ def GetDate():
                 print("please enter as MMDDYYYY")
         except KeyboardInterrupt:
             stderr.write("Ctrl-C detected! Quitting")
-            quit(-1)
+            exit(-1)
     return start_date
 
 
