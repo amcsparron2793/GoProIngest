@@ -186,16 +186,3 @@ def welcome():
 
 if __name__ == "__main__":
     welcome()
-    """folder_names = {
-        'root': 'P-Town',
-        'LocationSubDirs': LocationSubDirs,
-        'DateOfFootageDir': f"{GetDate()}-{current_date}",
-        'PerDumpSubdirs': PerDumpSubdirs
-    }
-
-    BaseSaveLocation = CreateDirStruc()  # StorageLetter="C:\\Users\\amcsp\\Desktop")
-
-    CamSD_DriveLetter = StoragePresent(CameraSDName)  # 'D:\\'
-    CamSD_ContentBasePath = os.path.join(CamSD_DriveLetter, "DCIM", "100GOPRO")
-    # TODO: make this easier to look at and PAUSE BEFORE QUITTING
-    SortContent(BaseSaveLocation)"""
