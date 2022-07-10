@@ -18,6 +18,21 @@ StorageName = 'GoProStorage'
 CameraSDName = 'GoProSDCard'
 
 
+def ConvertSize(size_in_bytes: int) -> str:
+    candidates = []
+    prefex_dict = {"kilo": 1000,
+                   "mega": 1000000,
+                   "giga": 1000000000,
+                   "tera": 1000000000000}
+
+    for n, s in prefex_dict.items():
+        if s < size_in_bytes:
+            # FIXME: this gives two answers, need to figure out a way to only pick the largest
+            #print(f"{round((size_in_bytes / s), 2)} {n}bytes")
+            candidates.append({n: round((size_in_bytes / s), 2)})
+    print([max(x.values()) for x in candidates])
+
+
 def StoragePresent(DriveNameToCheck=StorageName):
     d_count = 0
     drive_letters = win32api.GetLogicalDriveStrings().split('\000')[:-1]
@@ -130,12 +145,13 @@ def SortContent(base_save_location):
 
     for f in media_files:
         # shutil.Error
+        print(f"copying {f} - Filesize: {os.path.getsize(f)}")
         shutil.copy2(f, media_save_location)
-        print(f"{f} copied")
+        print(f"{f} copied to {media_save_location}")
 
     for f in support_files:
         shutil.copy2(f, support_save_location)
-        print(f"{f} copied")
+        print(f"{f} copied to {support_save_location}")
 
 
 def yesnoquit(question):
@@ -185,4 +201,5 @@ def welcome():
 
 
 if __name__ == "__main__":
-    welcome()
+    #welcome()
+    ConvertSize(170618077)
