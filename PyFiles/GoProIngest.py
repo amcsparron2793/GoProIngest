@@ -18,6 +18,11 @@ StorageName = 'GoProStorage'
 CameraSDName = 'GoProSDCard'
 
 
+def hash_files_in_drive(storage_path):
+    """will be based off of https://www.geeksforgeeks.org/finding-duplicate-files-with-python/ """
+    print("ahahah")
+
+
 def convert_size(size_in_bytes: int) -> str:
     candidates = []
     correct_name_and_value = None
