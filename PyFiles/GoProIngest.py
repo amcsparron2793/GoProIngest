@@ -173,8 +173,10 @@ def sort_content(base_save_location):
         shutil.copy2(f, support_save_location)
         print(f"{f} copied to {support_save_location}")
         total_size_of_copy += os.path.getsize(f)
+
     pretty_size = convert_size(total_size_of_copy)
-    print(pretty_size)
+    print(f"\n{len(support_files) + len(media_files)} individual files"
+          f" totaling {pretty_size} in size copied to {base_save_location}.")
 
 
 def yes_no_quit(question):
@@ -211,7 +213,6 @@ def start_ingest():
 
     CamSD_DriveLetter = storage_present(CameraSDName)  # 'D:\\'
     CamSD_ContentBasePath = os.path.join(CamSD_DriveLetter, "DCIM", "100GOPRO")
-    # TODO: make this easier to look at and PAUSE BEFORE QUITTING
     sort_content(BaseSaveLocation)
 
 
@@ -219,6 +220,8 @@ def welcome():
     print("**** GoPro Ingest Script *****")
     if yes_no_quit("Start Ingest"):
         start_ingest()
+        if input("Press enter to quit: "):
+            exit(0)
     else:
         print("Ok goodbye!")
 
