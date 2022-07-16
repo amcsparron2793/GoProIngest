@@ -1,32 +1,29 @@
 # Importing Libraries
 import os
 import sys
+from os.path import isdir, join
 from pathlib import Path
 import hashlib
 
+
 # TODO: clean this up and make it work as an importable module.
-
-
-def FindDuplicate(SupFolder):
-    # Duplic is in format {hash:[names]}
-    Duplic = {}
-    for file_name in files:
-        # Path to the file
-        path = os.path.join(folders, file_name)
-
-        # Calculate hash
-        file_hash = Hash_File(path)
-
-        # Add or append the file path to Duplic
-        if file_hash in Duplic:
-            Duplic[file_hash].append(file_name)
-        else:
-            Duplic[file_hash] = [file_name]
-    return Duplic
+def make_test_files(num_files):
+    counter = 1
+    misc_files = "../Misc_Project_Files"
+    if isdir(misc_files):
+        pass
+    else:
+        os.mkdir(misc_files)
+    while counter < num_files + 1:
+        with open(join(misc_files, f"test_num_{str(counter)}.txt"), "w") as f:
+            if counter / 2 % 1:
+                f.write(str(counter))
+            counter += 1
+    print(f"{num_files} written")
 
 
 # Joins dictionaries
-def Join_Dictionary(dict_1, dict_2):
+def join_dictionary(dict_1, dict_2):
     for key in dict_2.keys():
         # Checks for existing key
         if key in dict_1:
@@ -39,8 +36,8 @@ def Join_Dictionary(dict_1, dict_2):
 
 # Calculates MD5 hash of file
 # Returns HEX digest of file
-def Hash_File(path):
-    # Opening file in afile
+def hash_file(path):
+    # open the file as bytes
     afile = open(path, 'rb')
     hasher = hashlib.md5()
     blocksize = 65536
@@ -53,22 +50,31 @@ def Hash_File(path):
     return hasher.hexdigest()
 
 
-path_to_folder = "../Misc_Project_Files"
-Duplic = {}
-folders = Path(path_to_folder)
-files = sorted(os.listdir(folders))
+def make_hash_dict():
+    # TODO: make this more portable
+    checked = {}
+    path_to_folder = "../Misc_Project_Files"
+    all_files_hashes = {}
+    duplicates = {}
+    folders = Path(path_to_folder)
+    files = sorted(os.listdir(folders))
 
-for i in files:
-    # Iterate over the files
-    # Find the duplicated files
-    # Append them to the Duplic
-    Join_Dictionary(Duplic, FindDuplicate(i))
+    # this part works
+    for file in files:
+        h = hash_file(join(folders, file))
+        all_files_hashes.update({file: h})
+    # print(all_files_hashes)
 
-# Results store a list of Duplic values
-results = list(filter(lambda x: len(x) > 1, Duplic.values()))
-if len(results) > 0:
-    for result in results:
-        for sub_result in result:
-            print('\t\t%s' % sub_result)
-else:
-    print('No duplicates found.')
+    # FIXME: this part doesnt work since update overwrites the previous value
+    for k, v in all_files_hashes.items():
+        if v not in checked.values():
+            checked.update({k: v})
+        else:
+            duplicates.update({k: v})
+
+    print(duplicates)
+    return duplicates
+
+
+make_hash_dict()
+#make_test_files(5)
